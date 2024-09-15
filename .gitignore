@@ -1,0 +1,12 @@
+# Ignore node_modules and vendor
+frontend/node_modules
+backend/vendor
+frontend/build
+backend/public/storage
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore environment files
+.env
