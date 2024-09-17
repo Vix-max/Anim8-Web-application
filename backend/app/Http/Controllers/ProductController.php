@@ -67,6 +67,25 @@ class ProductController extends Controller
             // Return the product as JSON
             return response()->json(['product' => $product], 200);
         }
+
+        public function getProductByName($name)
+        {
+            // Use where to find the product by product_name
+            $product = Product::where('product_name', $name)->first();
+            
+            if (!$product) {
+                return response()->json(['message' => 'Product not found'], 404);
+            }
+            
+            // Cast prices to float for consistency
+            $product->buy_price = (float) $product->buy_price;
+            $product->sell_price = (float) $product->sell_price;
+            
+            // Return the product as JSON
+            return response()->json(['product' => $product], 200);
+        }
+
+
     
 
 }

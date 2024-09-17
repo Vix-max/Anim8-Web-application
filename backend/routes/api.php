@@ -6,6 +6,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\OrderController;
 
 // Existing route
 Route::get('/user', function (Request $request) {
@@ -22,7 +23,10 @@ Route::post('/login/admin', [AuthController::class, 'loginAdmin']);
 
 Route::get('/products/getAllProducts', [ProductController::class, 'getAllProducts']);
 Route::post('/products/add', [ProductController::class, 'addProduct']);
+
 Route::get('/products/getProduct/{id}', [ProductController::class, 'getProductById']);
+Route::get('/products/getProductByName/{product_name}', [ProductController::class, 'getProductByName']);
+
 
 Route::post('/chatbot/predict-intent', function (Request $request) {
     $response = Http::post('http://localhost:5000/chatbot/predict', [
@@ -31,6 +35,13 @@ Route::post('/chatbot/predict-intent', function (Request $request) {
     
     return response()->json($response->json());
 });
+
+//Order routes
+Route::post('/orders/add', [OrderController::class, 'addOrder'])->middleware('auth:sanctum');
+// In routes/api.php
+Route::middleware('auth:sanctum')->get('/orders/getorderbyuser/{userId}', [OrderController::class, 'getOrdersByUser']);
+Route::get('/orders/getorderitems/{orderId}', [OrderController::class, 'getOrderItems']);
+Route::get('/orders/getAll', [OrderController::class, 'getAllOrders']);
 
 
 
